@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrinho 2026</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#f4fff2;
+color:#222;
+padding-left:70px;
+}
+
+/* Barra lateral */
+
+#barraNivel{
+position:fixed;
+left:0;
+top:0;
+width:70px;
+height:100vh;
+background:#111;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+padding:15px 0;
+z-index:999;
+}
+
+.nivel{
+width:45px;
+height:16%;
+background:#222;
+border-radius:12px;
+transition:0.5s;
+}
+
+#iconeArvore,
+#iconeFogo{
+font-size:28px;
+}
+
+/* topo */
+
+header{
+background:#2e7d32;
+color:white;
+text-align:center;
+padding:30px;
+}
+
+header button{
+padding:10px 20px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* hero */
+
+.hero{
+height:300px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80');
+background-size:cover;
+color:white;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.hero p{
+font-size:22px;
+margin-top:10px;
+}
+
+/* seções */
+
+section{
+padding:50px 20px;
+text-align:center;
+}
+
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+width:280px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* árvore */
+
+#areaArvore{
+background:#f1f8e9;
+border-top:5px solid #66bb6a;
+border-bottom:5px solid #66bb6a;
+position:relative;
+overflow:hidden;
+}
+
+#areaArvore button{
+padding:18px 35px;
+font-size:22px;
+border:none;
+border-radius:15px;
+background:#43a047;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* quiz */
+
+#quiz{
+background:#e8f5e9;
+border-top:5px solid #2e7d32;
+border-bottom:5px solid #2e7d32;
+}
+
+#quiz button{
+padding:18px 35px;
+font-size:22px;
+margin:10px;
+border:none;
+border-radius:12px;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+.errado{background:#e53935;}
+.certo{background:#43a047;}
+
+/* folhas */
+
+.folha{
+position:absolute;
+top:-30px;
+font-size:28px;
+animation:cair 2s linear forwards;
+pointer-events:none;
+}
+
+@keyframes cair{
+0%{transform:translateY(0) rotate(0deg); opacity:1;}
+100%{transform:translateY(500px) rotate(360deg); opacity:0;}
+}
+
+footer{
+background:#2e7d32;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+#botaoFinal{display:block;margin:30px auto 0 auto;padding:18px 35px;font-size:22px;font-weight:bold;border:none;border-radius:15px;background:linear-gradient(45deg,#43a047,#66bb6a);color:white;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.2);transition:0.3s;}#botaoFinal:hover{transform:scale(1.05);box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+
+#botaoAgua{
+display:block;
+margin:35px auto 0 auto;
+padding:20px 40px;
+font-size:24px;
+font-weight:bold;
+border:none;
+border-radius:18px;
+cursor:pointer;
+color:white;
+background:linear-gradient(45deg,#0288d1,#26c6da);
+box-shadow:0 10px 22px rgba(0,0,0,0.25);
+transition:0.3s;
+animation:pulsarAgua 1.5s infinite;
+}
+
+#botaoAgua:hover{
+transform:scale(1.08);
+box-shadow:0 14px 28px rgba(0,0,0,0.35);
+}
+
+@keyframes pulsarAgua{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+</style>
+</head>
+<body>
+
+<!-- Barra -->
+<div id="barraNivel">
+<div id="iconeArvore">🌳</div>
+
+<div class="nivel" id="n5"></div>
+<div class="nivel" id="n4"></div>
+<div class="nivel" id="n3"></div>
+<div class="nivel" id="n2"></div>
+<div class="nivel" id="n1"></div>
+
+<div id="iconeFogo">🔥</div>
+</div>
+
+<header>
+<h1>🌱 Agrinho 2026</h1>
+<br>
+<button onclick="modoNoite()" id="botaoTema">
+🌙 Modo Noite
+</button>
+</header>
+
+<section class="hero">
+<div>
+<h1>Agro forte, futuro sustentável</h1>
+<p>Equilíbrio entre a produção e o meio ambiente.</p>
+</div>
+</section>
+
+<section>
+<h2>🌾 A força do Agro</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🍎 Produção de Alimentos</h3>
+<p>O campo alimenta milhões de pessoas todos os dias.</p>
+</div>
+
+<div class="card">
+<h3>💼 Geração de Empregos</h3>
+<p>O agronegócio movimenta a economia.</p>
+</div>
+
+<div class="card">
+<h3>🚜 Tecnologia</h3>
+<p>Máquinas modernas ajudam a produzir melhor.</p>
+</div>
+
+</div>
+</section>
+
+<section id="areaArvore">
+<h2>🌳 Plante o Futuro</h2>
+<br>
+<p style="font-size:24px;">
+Árvores plantadas: <span id="contador">0</span>
+</p>
+<br>
+
+<button onclick="plantarArvore(); contarArvore()">
+🌱 Plantar Árvore
+</button>
+
+<p id="mensagem" style="font-size:24px; margin-top:20px;"></p>
+</section>
+
+<section id="quiz">
+<h2>🌎 Quiz Sustentável</h2>
+<br>
+
+<p style="font-size:24px;">
+O que ajuda o meio ambiente?
+</p>
+<br>
+
+<button class="errado" onclick="resposta('errado')">
+🔥 Queimadas
+</button>
+
+<button class="certo" onclick="resposta('certo')">
+🌳 Reflorestamento
+</button>
+
+<p id="resultado" style="font-size:26px; margin-top:20px;"></p>
+</section>
+
+<section id="miniGame"><h2>💧 Mini Game Final</h2><p style="font-size:22px; margin-top:15px;">A água é essencial para a vida e para a produção no campo.<br>Evite desperdícios!</p><div id="torneira" style="font-size:70px;margin-top:30px;">🚰💧💧💧</div><button onclick="fecharTorneira()" id="botaoAgua">💧 Fechar Torneira</button><p id="resultadoAgua" style="font-size:24px;font-weight:bold;margin-top:25px;"></p></section>
+
+</section>
+
+<section id="mensagemFinal">
+
+<h2>🌍 Nosso Futuro Começa Hoje</h2>
+
+<p>
+O campo produz alimento, gera empregos e movimenta o país.<br><br>
+
+Mas crescer de verdade significa produzir com responsabilidade.<br><br>
+
+Cuidar da água, preservar as florestas e investir em tecnologia
+é garantir que as próximas gerações também tenham um futuro.<br><br>
+
+Cada pequena atitude faz diferença.<br>
+Plantar hoje é construir um futuro sustentável, equilibrando a produção e o meio ambiente.
+</p>
+
+</section>
+
+<br><br>
+
+<button onclick="botaoFinalClique()" id="botaoFinal">
+🌍 Assumir Compromisso
+</button>
+
+<footer>
+Criado para o Concurso Agrinho 2026 🌱
+</footer>
+
+<script>
+
+/* =========================
+VARIÁVEIS
+========================= */
+
+let nivelNatureza = 0;
+
+let jaPlantou = false;
+let jaQuiz = false;
+let jaTema = false;
+let jaFinal = false;
+let jaAgua = false;
+
+let total = 0;
+let escuro = false;
+
+/* =========================
+ÁUDIOS
+========================= */
+
+let musica = new Audio("sons/musica.mp3");
+let passaros = new Audio("sons/passaros.mp3");
+let coruja = new Audio("sons/coruja.mp3");
+let agua = new Audio("sons/agua.mp3");
+let sinos = new Audio("sons/sinos.mp3");
+
+musica.loop = true;
+passaros.loop = true;
+coruja.loop = true;
+agua.loop = true;
+sinos.loop = true;
+
+musica.volume = 0.12;
+passaros.volume = 0.00;
+coruja.volume = 0.00;
+agua.volume = 0.00;
+sinos.volume = 0.00;
+
+/* =========================
+BARRA
+========================= */
+
+function subirNatureza(){
+
+if(nivelNatureza < 5){
+nivelNatureza++;
+}
+
+for(let i=1;i<=5;i++){
+document.getElementById("n"+i).style.background="#222";
+}
+
+if(nivelNatureza>=1){n1.style.background="red";}
+if(nivelNatureza>=2){n2.style.background="orange";}
+if(nivelNatureza>=3){n3.style.background="yellow";}
+if(nivelNatureza>=4){n4.style.background="#66ff66";}
+if(nivelNatureza>=5){n5.style.background="#00cc00";}
+
+atualizarSons();
+
+}
+
+/* =========================
+SONS POR NÍVEL
+========================= */
+
+function atualizarSons(){
+
+if(nivelNatureza >= 1){
+musica.play();
+}
+
+if(nivelNatureza >= 2){
+
+if(escuro == false){
+passaros.play();
+passaros.volume = 0.18;
+}else{
+coruja.play();
+coruja.volume = 0.18;
+}
+
+}
+
+if(nivelNatureza >= 3){
+agua.play();
+agua.volume = 0.18;
+}
+
+if(nivelNatureza >= 4){
+sinos.play();
+sinos.volume = 0.10;
+}
+
+if(nivelNatureza >= 5){
+
+musica.volume = 0.16;
+agua.volume = 0.22;
+sinos.volume = 0.12;
+
+if(escuro == false){
+passaros.volume = 0.22;
+}else{
+coruja.volume = 0.22;
+}
+
+}
+
+}
+
+/* =========================
+ÁRVORE
+========================= */
+
+function plantarArvore(){
+
+total++;
+contador.innerText = total;
+
+mensagem.innerText =
+"🌿 Você ajudou o planeta!";
+
+for(let i=0;i<8;i++){
+
+let folha = document.createElement("div");
+
+folha.classList.add("folha");
+
+folha.innerText="🍃";
+
+folha.style.left=Math.random()*90+"%";
+
+areaArvore.appendChild(folha);
+
+setTimeout(function(){
+folha.remove();
+},2000);
+
+}
+
+}
+
+function contarArvore(){
+
+if(jaPlantou == false){
+subirNatureza();
+jaPlantou = true;
+}
+
+}
+
+/* =========================
+QUIZ
+========================= */
+
+function resposta(tipo){
+
+if(tipo == "certo"){
+
+resultado.innerText =
+"✅ Correto!";
+
+resultado.style.color = "green";
+
+if(jaQuiz == false){
+subirNatureza();
+jaQuiz = true;
+}
+
+}else{
+
+resultado.innerText =
+"❌ Errado!";
+
+resultado.style.color = "red";
+
+}
+
+}
+
+/* =========================
+MODO NOITE
+========================= */
+
+function modoNoite(){
+
+let secoes = document.querySelectorAll("section");
+let cards = document.querySelectorAll(".card");
+
+if(escuro == false){
+
+document.body.style.background="#000";
+document.body.style.color="white";
+
+for(let i=0;i<secoes.length;i++){
+secoes[i].style.background="#111";
+secoes[i].style.color="white";
+}
+
+for(let i=0;i<cards.length;i++){
+cards[i].style.background="#1a1a1a";
+cards[i].style.color="white";
+}
+
+botaoTema.innerText="☀️ Modo Dia";
+
+escuro = true;
+
+/* troca pássaro por coruja */
+
+passaros.pause();
+passaros.currentTime = 0;
+
+if(nivelNatureza >= 2){
+coruja.play();
+coruja.volume = 0.18;
+}
+
+if(jaTema == false){
+subirNatureza();
+jaTema = true;
+}
+
+}else{
+
+document.body.style.background="#f4fff2";
+document.body.style.color="#222";
+
+for(let i=0;i<secoes.length;i++){
+secoes[i].style.background="";
+secoes[i].style.color="#222";
+}
+
+for(let i=0;i<cards.length;i++){
+cards[i].style.background="white";
+cards[i].style.color="#222";
+}
+
+areaArvore.style.background="#f1f8e9";
+quiz.style.background="#e8f5e9";
+
+botaoTema.innerText="🌙 Modo Noite";
+
+escuro = false;
+
+/* troca coruja por pássaro */
+
+coruja.pause();
+coruja.currentTime = 0;
+
+if(nivelNatureza >= 2){
+passaros.play();
+passaros.volume = 0.18;
+}
+
+}
+
+}
+
+/* =========================
+BOTÃO FINAL
+========================= */
+
+function botaoFinalClique(){
+
+if(jaFinal == false){
+
+subirNatureza();
+
+botaoFinal.innerText =
+"✅ Compromisso Assumido";
+
+botaoFinal.style.background =
+"#2e7d32";
+
+jaFinal = true;
+
+}
+
+}
+
+/* =========================
+ÁGUA
+========================= */
+
+function fecharTorneira(){
+
+if(jaAgua == false){
+
+subirNatureza();
+
+torneira.innerText = "🚰";
+
+resultadoAgua.innerText =
+"✅ Água economizada!";
+
+resultadoAgua.style.color =
+"#0288d1";
+
+botaoAgua.innerText =
+"✅ Torneira Fechada";
+
+botaoAgua.style.background =
+"#2e7d32";
+
+jaAgua = true;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
